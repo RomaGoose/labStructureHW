@@ -1,0 +1,15 @@
+[DBG] | [lab2.6.c:main:22]  запуск программы PID: 6040
+[DBG] | [lab2.6.c:main:22]  запуск программы PID: 22256
+[DBG] | [lab2.6.c:main:22]  запуск программы PID: 18824
+[DBG] | [lab2.6.c:main:22]  запуск программы PID: 10720
+[DBG] | [lab2.6.c:main:22]  запуск программы PID: 20456
+[DBG] | [lab2.6.c:main:22]  запуск программы PID: 8456
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 10720
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 22256
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 22256
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 22256
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 18824
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 18824
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 18824
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 18824
+[WRN] | [func.c:easy_scan:118]  неверно введена команда PID: 18824
