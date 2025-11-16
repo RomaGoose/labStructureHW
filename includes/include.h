@@ -1,4 +1,5 @@
 #pragma once 
+#include "macros.h"
 
 typedef enum {ALT, START, CMD_ERR, LEN_WARN} cmd_type;
 

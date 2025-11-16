@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <string.h> 
-#include "macros.h"
-#include "include.h"
-#include "log.h"
+#include "..\includes\macros.h"
+#include "..\includes\include.h"
+#include "..\includes\log.h"
 
 int main(){
     setlocale(LC_ALL, "ru_RU.UTF-8");

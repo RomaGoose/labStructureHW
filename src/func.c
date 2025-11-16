@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
-#include "log.h"
-#include "macros.h"
-#include "include.h"
+#include "..\includes\log.h"
+#include "..\includes\include.h"
 
 void insert(char* prog_name, Task_list** active_task_ptr){
     Task_list* new_ptr = malloc(sizeof(Task_list));
