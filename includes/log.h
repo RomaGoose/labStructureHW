@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include <windows.h>
-#include "macros.h"
 
 #define LOG_FILE_NAME "..\\lab2\\build\\logs.txt"
 #define _LOG(lvl, log) _LOGF(lvl, " %s", log) 

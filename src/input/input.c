@@ -1,63 +1,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <locale.h>
-#include "..\includes\log.h"
-#include "..\includes\include.h"
-
-void insert(char* prog_name, Task_list** active_task_ptr){
-    Task_list* new_ptr = malloc(sizeof(Task_list));
-    
-    if (!new_ptr){
-        puts("Не удалось выделить память");
-        memory_clear(*active_task_ptr);
-        exit(1);
-    }
-
-    if(*active_task_ptr != NULL){
-        new_ptr->next = *active_task_ptr;
-        new_ptr->prev = (*active_task_ptr)->prev;
-        (*active_task_ptr)->prev->next = new_ptr;
-        (*active_task_ptr)->prev = new_ptr;
-    }
-    else{
-        new_ptr->next = new_ptr;
-        new_ptr->prev = new_ptr;
-    }
-    memcpy(new_ptr->prog_name, prog_name, sizeof(char)*MAX_PROG_NAME_LEN);  
-    
-    *active_task_ptr = new_ptr;
-    // for(unsigned char i = 0; i < MAX_PROG_NAME_LEN; ++i)
-    //     new_ptr->prog_name[i]=prog_name[i];
-}
-
-void shift(unsigned short index,  Task_list** active_task_ptr){
-    Task_list* chosen_ptr = *active_task_ptr;
-    
-    for (unsigned short i = 0; i<index; ++i)
-        chosen_ptr = chosen_ptr->next;
-    
-    chosen_ptr->next->prev = chosen_ptr->prev;
-    chosen_ptr->prev->next = chosen_ptr->next;
-    
-    chosen_ptr->next=*active_task_ptr;
-    chosen_ptr->prev=(*active_task_ptr)->prev;
-
-    (*active_task_ptr)->prev->next = chosen_ptr;
-    (*active_task_ptr)->prev = chosen_ptr;
-
-    *active_task_ptr = chosen_ptr;
-}
-
-void memory_clear(Task_list* task){
-    if (task == NULL) return;
-    Task_list* temp;
-    task->prev->next=NULL;
-    while (task != NULL){
-        temp = task->next;
-        free(task);
-        task = temp;
-    }
-}
+#include "macros.h"
+#include "input_cmd_internal.h"
+#include "llist.h"
 
 Command cmd_process(char* cmd_text){
     Command cmd;
@@ -137,4 +83,57 @@ Command easy_scan(char* buff){
         }
     }
     if (cmd.type == ALT || cmd.type == START) return cmd;
+}
+
+void get_N(unsigned short * N){
+    char buff[MAX_INPUT_LEN];
+    int scan = scanf("%u", N);
+    while (scan != 1 || !(MIN_NUMBER_OF_INPUTS <= *N && *N <= MAX_NUMBER_OF_INPUTS)){
+        _LOG("WRN", "введено некорректное значение N");
+        puts("Введите корректное значение N:");
+        Clear();
+        scan = scanf("%u", N);
+    }
+   
+}
+
+void process_input_to_output(unsigned short N, char (*output)[MAX_PROG_NAME_LEN]){
+    char buff[MAX_INPUT_LEN];
+    Command cmd;
+    Task_list* active_task = NULL;
+    char first_cmd_failed;
+    for (unsigned short i= 0; i < N; ++i){
+        cmd = easy_scan(buff);
+        first_cmd_failed = 0;
+        switch (cmd.type){
+            case(ALT):
+                if (i == 0){
+                    _LOG("WRN","ввел альт таб первой командой");
+                    puts("Нельзя вводить АльтТаб без открытых окон. Введите снова:");
+                    first_cmd_failed = 1;
+                    --i;
+                    break;
+                }
+                shift(cmd.value.tab_count, &active_task);
+                break;
+            case(START):
+                insert(buff+START_OFFSET, &active_task);
+                break;
+            default:
+                memory_clear(active_task);
+                puts("непредвиденная ошибка");
+                
+                _LOG("DBG", "конец программы");
+                exit(1);
+                break;
+        }
+        
+        if(!first_cmd_failed){
+        memcpy(output[i], get_prog_name(active_task), MAX_PROG_NAME_LEN);
+        output[i][MAX_PROG_NAME_LEN] = '\0';
+        }
+    }
+
+    memory_clear(active_task);
+    puts("-------------------------------");
 }
