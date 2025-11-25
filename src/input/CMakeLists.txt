@@ -4,8 +4,12 @@ project(input LANGUAGES C)
 
 set(SRC input.c)
 
-add_library(input SHARED ${SRC})
+add_library(input STATIC ${SRC})
+
 target_include_directories(input PUBLIC
-    # ${CMAKE_CURRENT_SOURCE_DIR}/../../../includes/
-    ${CMAKE_SOURCE_DIR}/../../includes/
-    C:/pokpok/labs/lab2/includes)
+    ${CMAKE_SOURCE_DIR}/includes/
+)
+
+target_link_libraries(input 
+  PRIVATE lists 
+)
