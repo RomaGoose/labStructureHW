@@ -1,3 +1,4 @@
+#pragma once
 
 typedef struct _Task_list Task_list;
 

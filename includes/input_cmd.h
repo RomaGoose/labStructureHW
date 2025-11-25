@@ -1,3 +1,4 @@
+#pragma once
 
 typedef enum {ALT, START, CMD_ERR, LEN_WARN} cmd_type;
 typedef union cmd_value cmd_value;
